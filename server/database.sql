@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `group_code` VARCHAR(64) DEFAULT NULL COMMENT '管理员分组口令',
   `admin_uid` INT DEFAULT NULL COMMENT '顾客所属管理员UID',
   `last_nickname_change_at` DATETIME DEFAULT NULL COMMENT '上次修改昵称时间',
+  `deleted_at` DATETIME DEFAULT NULL COMMENT '软删除时间',
   INDEX `idx_user_openid` (`openid`),
   INDEX `idx_user_role` (`role`),
   INDEX `idx_user_status` (`status`),
@@ -54,6 +55,7 @@ CREATE TABLE IF NOT EXISTS `dish` (
   INDEX `idx_dish_cate_id` (`cate_id`),
   INDEX `idx_dish_is_deleted` (`is_deleted`),
   INDEX `idx_dish_visibility` (`visibility`),
+  INDEX `idx_dish_cate_deleted` (`cate_id`, `is_deleted`),
   FOREIGN KEY (`cate_id`) REFERENCES `category`(`cate_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='菜品表';
 
@@ -62,6 +64,7 @@ CREATE TABLE IF NOT EXISTS `dish_visible_users` (
   `dish_id` INT NOT NULL,
   `uid` INT NOT NULL,
   PRIMARY KEY (`dish_id`, `uid`),
+  INDEX `idx_dish_visible_users_uid` (`uid`),
   FOREIGN KEY (`dish_id`) REFERENCES `dish`(`dish_id`),
   FOREIGN KEY (`uid`) REFERENCES `user`(`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='菜品可见白名单';
@@ -78,6 +81,7 @@ CREATE TABLE IF NOT EXISTS `points_flow` (
   INDEX `idx_points_flow_uid` (`uid`),
   INDEX `idx_points_flow_type` (`type`),
   INDEX `idx_points_flow_created_at` (`created_at`),
+  INDEX `idx_points_flow_uid_created_at` (`uid`, `created_at`),
   FOREIGN KEY (`uid`) REFERENCES `user`(`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='积分流水表';
 
@@ -92,6 +96,9 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `is_top` TINYINT NOT NULL DEFAULT 0 COMMENT '是否置顶',
   `status` TINYINT NOT NULL DEFAULT 1 COMMENT '状态：1显示 0隐藏',
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX `idx_comment_dish_id` (`dish_id`),
+  INDEX `idx_comment_uid` (`uid`),
+  INDEX `idx_comment_status` (`status`),
   FOREIGN KEY (`dish_id`) REFERENCES `dish`(`dish_id`),
   FOREIGN KEY (`uid`) REFERENCES `user`(`uid`),
   FOREIGN KEY (`parent_id`) REFERENCES `comment`(`comment_id`)
@@ -109,7 +116,10 @@ CREATE TABLE IF NOT EXISTS `exchange_reward` (
   `start_time` DATETIME DEFAULT NULL COMMENT '开始时间',
   `end_time` DATETIME DEFAULT NULL COMMENT '结束时间',
   `status` TINYINT NOT NULL DEFAULT 1 COMMENT '状态：1启用 0禁用',
-  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `creator_uid` INT DEFAULT NULL COMMENT '创建者UID',
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX `idx_exchange_reward_creator_uid` (`creator_uid`),
+  INDEX `idx_exchange_reward_status` (`status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='积分兑换奖励表';
 
 -- 8. 兑换申请表
@@ -121,6 +131,8 @@ CREATE TABLE IF NOT EXISTS `exchange_request` (
   `remark` VARCHAR(255) DEFAULT NULL COMMENT '备注',
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX `idx_exchange_request_uid` (`uid`),
+  INDEX `idx_exchange_request_status` (`status`),
   FOREIGN KEY (`uid`) REFERENCES `user`(`uid`),
   FOREIGN KEY (`reward_id`) REFERENCES `exchange_reward`(`reward_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='兑换申请表';
@@ -149,6 +161,7 @@ CREATE TABLE IF NOT EXISTS `order_item` (
   `unit_price` INT NOT NULL COMMENT '单价（积分）',
   `status` VARCHAR(16) NOT NULL DEFAULT 'pending' COMMENT '制作状态：pending/preparing/completed',
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX `idx_order_item_dish_id` (`dish_id`),
   FOREIGN KEY (`order_id`) REFERENCES `order`(`order_id`),
   FOREIGN KEY (`dish_id`) REFERENCES `dish`(`dish_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='订单项表';

@@ -4,6 +4,7 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  DeleteDateColumn,
   VersionColumn,
   OneToMany,
 } from 'typeorm';
@@ -42,6 +43,9 @@ export class User {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @DeleteDateColumn({ name: 'deleted_at' })
+  deletedAt: Date;
 
   @Column({ name: 'last_nickname_change_at', type: 'datetime', nullable: true })
   lastNicknameChangeAt: Date;

@@ -49,6 +49,12 @@ export class OrderService {
       throw new BadRequestException('订单项不能为空');
     }
 
+    // 校验用户状态
+    const user = await this.userRepository.findOne({ where: { uid } });
+    if (!user || user.status === 0) {
+      throw new BadRequestException('账户已被禁用，无法下单');
+    }
+
     // 计算总积分
     let totalPoints = 0;
     const orderItems: { dish: Dish; quantity: number; unitPrice: number }[] = [];
@@ -60,6 +66,16 @@ export class OrderService {
 
       if (!dish) {
         throw new NotFoundException(`菜品不存在: ${item.dishId}`);
+      }
+
+      // 校验菜品可见性：visibility=1 时仅白名单用户可点
+      if (dish.visibility === 1) {
+        const allowed = await this.dataSource
+          .getRepository('dish_visible_users')
+          .findOne({ where: { dishId: dish.dishId, uid } });
+        if (!allowed) {
+          throw new BadRequestException(`菜品 "${dish.name}" 不对您开放`);
+        }
       }
 
       const unitPrice = await this.dishService.getCurrentPrice(item.dishId);

@@ -214,7 +214,7 @@ export class UserService {
       }
 
       user.nickname = trimmed;
-      user.account = trimmed;  // 昵称同步到账号
+      // 不再同步修改账号，账号注册后固定
       user.lastNicknameChangeAt = now;
     }
 
@@ -295,32 +295,15 @@ export class UserService {
 
   async deleteCustomer(adminUid: number, customerUid: number) {
     const customer = await this.userRepository.findOne({ where: { uid: customerUid } });
-    if (!customer) throw new NotFoundException('用户不存在');
+    if (!customer || customer.deletedAt) throw new NotFoundException('用户不存在');
     if (customer.role !== 'customer') throw new BadRequestException('只能删除顾客账户');
     if (customer.adminUid !== adminUid) throw new BadRequestException('只能删除自己组的顾客');
 
-    // 硬删除：先清理关联数据，再删除用户
-    const queryRunner = this.userRepository.manager.connection.createQueryRunner();
-    await queryRunner.connect();
-    await queryRunner.startTransaction();
+    // 软删除：保留历史数据，仅标记删除
+    customer.status = 0;
+    await this.userRepository.softDelete(customerUid);
 
-    try {
-      await queryRunner.query('DELETE FROM order_item WHERE order_id IN (SELECT order_id FROM `order` WHERE uid = ?)', [customerUid]);
-      await queryRunner.query('DELETE FROM `order` WHERE uid = ?', [customerUid]);
-      await queryRunner.query('DELETE FROM points_flow WHERE uid = ?', [customerUid]);
-      await queryRunner.query('DELETE FROM comment WHERE uid = ?', [customerUid]);
-      await queryRunner.query('DELETE FROM exchange_request WHERE uid = ?', [customerUid]);
-      await queryRunner.query('DELETE FROM dish_visible_users WHERE uid = ?', [customerUid]);
-      await queryRunner.query('DELETE FROM user WHERE uid = ?', [customerUid]);
-
-      await queryRunner.commitTransaction();
-      return { message: '删除成功' };
-    } catch (error) {
-      await queryRunner.rollbackTransaction();
-      throw error;
-    } finally {
-      await queryRunner.release();
-    }
+    return { message: '删除成功' };
   }
 
   async banCustomer(adminUid: number, customerUid: number) {
