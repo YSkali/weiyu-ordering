@@ -295,20 +295,24 @@ export class ExchangeService {
   }
 
   async reviewRequest(requestId: number, status: string, remark?: string) {
-    const request = await this.requestRepository.findOne({
-      where: { requestId },
-      relations: ['reward', 'user'],
-    });
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
 
-    if (!request) throw new NotFoundException('兑换请求不存在');
-    if (request.status !== 'pending') throw new BadRequestException('该请求已被处理');
+    try {
+      // 事务内加锁读取请求，防止并发重复审核
+      const request = await queryRunner.manager.getRepository(ExchangeRequest)
+        .createQueryBuilder('req')
+        .setLock('pessimistic_write')
+        .leftJoinAndSelect('req.reward', 'reward')
+        .leftJoinAndSelect('req.user', 'user')
+        .where('req.requestId = :requestId', { requestId })
+        .getOne();
 
-    if (status === 'approved') {
-      const queryRunner = this.dataSource.createQueryRunner();
-      await queryRunner.connect();
-      await queryRunner.startTransaction();
+      if (!request) throw new NotFoundException('兑换请求不存在');
+      if (request.status !== 'pending') throw new BadRequestException('该请求已被处理');
 
-      try {
+      if (status === 'approved') {
         const user = await queryRunner.manager.getRepository(User)
           .createQueryBuilder('user')
           .setLock('pessimistic_write')
@@ -344,17 +348,19 @@ export class ExchangeService {
         await queryRunner.commitTransaction();
         this.logger.log(`兑换审核通过: requestId=${requestId}`);
         return { message: '审核通过' };
-      } catch (error) {
-        await queryRunner.rollbackTransaction();
-        throw error;
-      } finally {
-        await queryRunner.release();
+      } else {
+        // 拒绝也走事务，保证一致性
+        request.status = 'rejected';
+        request.remark = remark || '';
+        await queryRunner.manager.getRepository(ExchangeRequest).save(request);
+        await queryRunner.commitTransaction();
+        return { message: '已拒绝' };
       }
-    } else {
-      request.status = 'rejected';
-      request.remark = remark || '';
-      await this.requestRepository.save(request);
-      return { message: '已拒绝' };
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      throw error;
+    } finally {
+      await queryRunner.release();
     }
   }
 

@@ -202,10 +202,20 @@ export class OrderService {
     await queryRunner.startTransaction();
 
     try {
-      const order = await queryRunner.manager.getRepository(Order).findOne({ where: { orderId } });
+      // 加锁读取订单，防止并发重复处理
+      const order = await queryRunner.manager.getRepository(Order)
+        .createQueryBuilder('order')
+        .setLock('pessimistic_write')
+        .where('order.orderId = :orderId', { orderId })
+        .getOne();
 
       if (!order) {
         throw new NotFoundException('订单不存在');
+      }
+
+      // 幂等：如果已经是目标状态，直接返回（防止重复奖励）
+      if (order.status === newStatus) {
+        return order;
       }
 
       const allowedTransitions = ORDER_STATUS_TRANSITIONS[order.status] || [];
