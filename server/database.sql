@@ -33,7 +33,8 @@ CREATE TABLE IF NOT EXISTS `category` (
   `cate_id` INT PRIMARY KEY AUTO_INCREMENT,
   `name` VARCHAR(32) NOT NULL COMMENT '分类名称',
   `sort` INT NOT NULL DEFAULT 0 COMMENT '排序号',
-  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='分类表';
 
 -- 3. 菜品表
@@ -92,6 +93,7 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `uid` INT NOT NULL COMMENT '用户ID',
   `content` TEXT NOT NULL COMMENT '评论内容',
   `rating` TINYINT NOT NULL DEFAULT 5 COMMENT '评分（1-5）',
+  CONSTRAINT `chk_comment_rating` CHECK (`rating` BETWEEN 1 AND 5),
   `parent_id` INT DEFAULT NULL COMMENT '回复的评论ID',
   `is_top` TINYINT NOT NULL DEFAULT 0 COMMENT '是否置顶',
   `status` TINYINT NOT NULL DEFAULT 1 COMMENT '状态：1显示 0隐藏',
@@ -118,6 +120,7 @@ CREATE TABLE IF NOT EXISTS `exchange_reward` (
   `status` TINYINT NOT NULL DEFAULT 1 COMMENT '状态：1启用 0禁用',
   `creator_uid` INT DEFAULT NULL COMMENT '创建者UID',
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   INDEX `idx_exchange_reward_creator_uid` (`creator_uid`),
   INDEX `idx_exchange_reward_status` (`status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='积分兑换奖励表';
@@ -161,6 +164,7 @@ CREATE TABLE IF NOT EXISTS `order_item` (
   `unit_price` INT NOT NULL COMMENT '单价（积分）',
   `status` VARCHAR(16) NOT NULL DEFAULT 'pending' COMMENT '制作状态：pending/preparing/completed',
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   INDEX `idx_order_item_dish_id` (`dish_id`),
   FOREIGN KEY (`order_id`) REFERENCES `order`(`order_id`),
   FOREIGN KEY (`dish_id`) REFERENCES `dish`(`dish_id`)

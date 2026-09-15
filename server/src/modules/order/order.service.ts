@@ -17,7 +17,6 @@ import { CreateOrderDto } from './dto/create-order.dto';
 
 // 订单状态流转规则
 const ORDER_STATUS_TRANSITIONS: Record<string, string[]> = {
-  pending: ['preparing', 'completed'],
   created: ['preparing', 'cancelled'],
   preparing: ['completed'],
   completed: ['confirmed'],
