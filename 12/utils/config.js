@@ -7,7 +7,7 @@
 const ENV = 'local'
 
 // 内网穿透地址 - 每次开新的 tunnel 改这里就行
-const TUNNEL_URL = 'tcp://33.tcp.cpolar.top:14850'
+const TUNNEL_URL = ''
 
 const CONFIG = {
   local: {
