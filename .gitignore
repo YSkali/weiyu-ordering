@@ -1,7 +1,25 @@
-# 全局忽略
+# 操作系统
 .DS_Store
 Thumbs.db
-*.log
 
-# 旧备份（不提交到仓库）
+# 日志
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+
+# 旧备份 / 临时文件夹
 前端代码/
+项目文档/
+.claude/
+
+# 后端（有自己的 .gitignore，这里做兜底）
+server/node_modules/
+server/dist/
+server/.env
+server/.env.local
+server/.env.*.local
+server/uploads/*
+!server/uploads/.gitkeep
