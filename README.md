@@ -12,25 +12,25 @@
 
 | 登录页 | 首页 | 菜品详情 |
 |--------|------|----------|
-| ![登录](docs/screenshots/login.png) | ![首页](docs/screenshots/customer-home.png) | ![详情](docs/screenshots/dish-detail.png) |
+| ![登录](https://raw.githubusercontent.com/YSkali/weiyu-ordering/main/docs/screenshots/login.png) | ![首页](https://raw.githubusercontent.com/YSkali/weiyu-ordering/main/docs/screenshots/customer-home.png) | ![详情](https://raw.githubusercontent.com/YSkali/weiyu-ordering/main/docs/screenshots/dish-detail.png) |
 
 | 购物车 | 下单 | 下单成功 |
 |--------|------|----------|
-| ![购物车](docs/screenshots/cart.png) | ![下单](docs/screenshots/checkout.png) | ![成功](docs/screenshots/order-success.png) |
+| ![购物车](https://raw.githubusercontent.com/YSkali/weiyu-ordering/main/docs/screenshots/cart.png) | ![下单](https://raw.githubusercontent.com/YSkali/weiyu-ordering/main/docs/screenshots/checkout.png) | ![成功](https://raw.githubusercontent.com/YSkali/weiyu-ordering/main/docs/screenshots/order-success.png) |
 
 ### 管理员端
 
 | 接单管理 | 菜品管理 | 菜品编辑 |
 |----------|----------|----------|
-| ![接单](docs/screenshots/admin-orders.png) | ![菜品](docs/screenshots/admin-dishes.png) | ![编辑](docs/screenshots/admin-dish-edit.png) |
+| ![接单](https://raw.githubusercontent.com/YSkali/weiyu-ordering/main/docs/screenshots/admin-orders.png) | ![菜品](https://raw.githubusercontent.com/YSkali/weiyu-ordering/main/docs/screenshots/admin-dishes.png) | ![编辑](https://raw.githubusercontent.com/YSkali/weiyu-ordering/main/docs/screenshots/admin-dish-edit.png) |
 
 | 用户管理 | 积分调整 | 奖励管理 | 兑换审核 |
 |----------|----------|----------|----------|
-| ![用户](docs/screenshots/admin-users.png) | ![积分](docs/screenshots/admin-points.png) | ![奖励](docs/screenshots/admin-rewards.png) | ![兑换](docs/screenshots/admin-exchange.png) |
+| ![用户](https://raw.githubusercontent.com/YSkali/weiyu-ordering/main/docs/screenshots/admin-users.png) | ![积分](https://raw.githubusercontent.com/YSkali/weiyu-ordering/main/docs/screenshots/admin-points.png) | ![奖励](https://raw.githubusercontent.com/YSkali/weiyu-ordering/main/docs/screenshots/admin-rewards.png) | ![兑换](https://raw.githubusercontent.com/YSkali/weiyu-ordering/main/docs/screenshots/admin-exchange.png) |
 
 ### 系统架构
 
-![架构图](docs/screenshots/architecture.png)
+![架构图](https://raw.githubusercontent.com/YSkali/weiyu-ordering/main/docs/screenshots/architecture.png)
 
 ---
 
