@@ -18,15 +18,36 @@ if not exist "server\" (
 
 cd server
 
-:: 检查 .env 是否存在
+:: 检查 .env 是否存在，不存在则从模板复制
 if not exist ".env" (
   echo [提示] 未找到 .env，从模板复制...
   copy .env.example .env
   echo.
-  echo [重要] 请编辑 server\.env 填入数据库密码，再重新运行本脚本！
+  echo [重要] 请编辑 server\.env 填入正确的数据库密码，再重新运行本脚本！
   echo.
   pause
   exit /b 1
+)
+
+:: 检查 .env 中是否仍是默认密码
+findstr /i "your_mysql_password" .env > nul
+if %errorlevel%==0 (
+  echo [错误] .env 中数据库密码仍是默认值 "your_mysql_password"！
+  echo.
+  echo [提示] 请用编辑器打开 server\.env，修改 DB_PASSWORD 为你的 MySQL 密码。
+  echo.
+  pause
+  exit /b 1
+)
+
+:: 检查 JWT_SECRET 是否仍是默认值
+findstr /i "change_this_to_a_random_string" .env > nul
+if %errorlevel%==0 (
+  echo [警告] JWT_SECRET 仍是默认值，建议修改为随机字符串。
+  echo.
+  choice /c YN /m "是否继续启动？(Y=继续/N=先去修改)"
+  if %errorlevel%==2 exit /b 1
+  echo.
 )
 
 :: 检查 node_modules
