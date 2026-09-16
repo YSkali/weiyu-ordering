@@ -16,17 +16,17 @@
 
 ### 管理员端
 
-| 用户管理 | 菜品管理 | 积分调整 |
-|----------|----------|----------|
-| ![用户](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/admin-users-list.png) | ![菜品](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/admin-dishes-list.png) | ![积分](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/admin-points-adjust.png) |
+| 用户管理 | 菜品管理 | 购物车 |
+|----------|----------|--------|
+| ![用户](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/admin-users-list.png) | ![菜品](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/admin-dishes-list.png) | ![购物车](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/admin-points-adjust.png) |
 
-| 积分流水 | 奖励管理 | 兑换审核 |
+| 正在制作 | 制作完毕 | 兑换审核 |
 |----------|----------|----------|
-| ![流水](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/admin-points.png) | ![奖励](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/admin-rewards.png) | ![兑换](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/admin-exchange.png) |
+| ![制作中](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/admin-points.png) | ![已完成](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/admin-rewards.png) | ![兑换](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/admin-exchange.png) |
 
 ### 系统架构
 
-![架构图](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/architecture.png)
+![架构图](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/architecture.svg)
 
 ---
 
