@@ -5,6 +5,28 @@
 
     <meta charset="UTF-8" />
     <script>
+      // 运行时注入 API 基础地址，覆盖编译时写死的 BASE_URL
+      (function(){
+        var apiBase = '__API_BASE_URL__';
+        // 如果是占位符，替换为当前 origin
+        if (apiBase === '__API_BASE_URL__') {
+          apiBase = location.origin + '/v1';
+        }
+        window.__API_BASE_URL__ = apiBase;
+        // 拦截 uni.request，强制使用正确的 BASE_URL
+        if (typeof uni !== 'undefined') {
+          var originalRequest = uni.request;
+          uni.request = function(options) {
+            if (options.url && options.url.indexOf('http') !== 0) {
+              // 相对路径，加上正确的 base
+              if (!options.url.startsWith('/v1/')) {
+                options.url = apiBase + options.url;
+              }
+            }
+            return originalRequest.call(this, options);
+          };
+        }
+      })();
       var coverSupport = 'CSS' in window && typeof CSS.supports === 'function' && (CSS.supports('top: env(a)') ||
         CSS.supports('top: constant(a)'))
       document.write(
