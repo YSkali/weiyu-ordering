@@ -10,21 +10,17 @@
 
 ### 顾客端
 
-| 登录页 | 首页 | 菜品详情 |
-|--------|------|----------|
-| ![登录](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/login.png) | ![首页](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/customer-home.png) | ![详情](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/dish-detail.png) |
-
-| 购物车 | 下单 | 下单成功 |
-|--------|------|----------|
-| ![购物车](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/cart.png) | ![下单](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/checkout.png) | ![成功](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/order-success.png) |
+| 登录页 | 首页 |
+|--------|------|
+| ![登录](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/login.png) | ![首页](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/customer-home.png) |
 
 ### 管理员端
 
-| 接单管理 | 菜品管理 | 菜品编辑 |
+| 订单管理 | 菜品管理 | 菜品编辑 |
 |----------|----------|----------|
-| ![接单](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/admin-orders.png) | ![菜品](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/admin-dishes.png) | ![编辑](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/admin-dish-edit.png) |
+| ![订单](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/admin-orders-list.png) | ![菜品](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/admin-dishes-list.png) | ![编辑](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/admin-dish-edit-form.png) |
 
-| 用户管理 | 积分调整 | 奖励管理 | 兑换审核 |
+| 用户管理 | 积分流水 | 奖励管理 | 兑换审核 |
 |----------|----------|----------|----------|
 | ![用户](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/admin-users.png) | ![积分](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/admin-points.png) | ![奖励](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/admin-rewards.png) | ![兑换](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/admin-exchange.png) |
 
