@@ -16,13 +16,9 @@
 
 ### 管理员端
 
-| 用户管理 | 菜品管理 | 购物车 |
+| 管理界面 | 用户管理 | 购物车 |
 |----------|----------|--------|
-| ![用户](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/admin-users-list.png) | ![菜品](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/admin-dishes-list.png) | ![购物车](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/admin-points-adjust.png) |
-
-| 正在制作 | 制作完毕 | 兑换审核 |
-|----------|----------|----------|
-| ![制作中](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/admin-points.png) | ![已完成](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/admin-rewards.png) | ![兑换](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/admin-exchange.png) |
+| ![管理员](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/admin-rewards.png?v=2) | ![用户管理](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/admin-exchange.png?v=2) | ![用户界面](https://cdn.jsdelivr.net/gh/YSkali/weiyu-ordering@main/docs/screenshots/admin-points-adjust.png?v=2) |
 
 ### 系统架构
 
